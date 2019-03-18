@@ -90,8 +90,10 @@ public class Kernel
                   fs = new FileSystem( 1000 );
 
                   return OK;
+                  
                case EXEC:
                   return sysExec( ( String[] )args );
+                  
                case WAIT:
                   if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
                      int myTid = myTcb.getTid( ); // get my thread ID
@@ -99,6 +101,7 @@ public class Kernel
                      // woken up by my child thread
                   }
                   return ERROR;
+                  
                case EXIT:
                   if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
                      int myPid = myTcb.getPid( ); // get my parent ID
@@ -112,28 +115,34 @@ public class Kernel
                      }
                   }
                   return ERROR;
+                  
                case SLEEP:   // sleep a given period of milliseconds
                   scheduler.sleepThread( param ); // param = milliseconds
                   return OK;
+                  
                case RAWREAD: // read a block of data from disk
                   while ( disk.read( param, ( byte[] )args ) == false )
                      ioQueue.enqueueAndSleep( COND_DISK_REQ );
                   while ( disk.testAndResetReady( ) == false )
                      ioQueue.enqueueAndSleep( COND_DISK_FIN );
                   return OK;
+                  
                case RAWWRITE: // write a block of data to disk
                   while ( disk.write( param, ( byte[] )args ) == false )
                      ioQueue.enqueueAndSleep( COND_DISK_REQ );
                   while ( disk.testAndResetReady( ) == false )
                      ioQueue.enqueueAndSleep( COND_DISK_FIN );
                   return OK;
-               case SYNC:     // synchronize disk data to a real file
+                  
+               case SYNC:
                   fs.sync( );
                   while ( disk.sync( ) == false )
                      ioQueue.enqueueAndSleep( COND_DISK_REQ );
                   while ( disk.testAndResetReady( ) == false )
                      ioQueue.enqueueAndSleep( COND_DISK_FIN );
                   return OK;
+                  
+               // Implemented for final project
                case READ:
                   switch ( param ) {
                      case STDIN:
@@ -156,19 +165,21 @@ public class Kernel
                         }
                      case STDOUT:
                      case STDERR:
-                        System.out.println( "threaOS: caused read errors" );
+                        System.out.println( "threadOS: caused read errors" );
                         return ERROR;
                   }
                   if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
-                     FileTableEntry ftEnt = myTcb.getFtEnt( param );
-                     if ( ftEnt != null )
-                        return fs.read( ftEnt, ( byte[] )args );
+                     FileTableEntry entry = myTcb.getFtEnt( param );
+                     if ( entry != null )
+                        return fs.read( entry, ( byte[] )args );
                   }
                   return ERROR;
+                  
+               // Implemented for final project
                case WRITE:
                   switch ( param ) {
                      case STDIN:
-                        System.out.println( "threaOS: cannot write to System.in" );
+                        System.out.println( "threadOS: cannot write to System.in" );
                         return ERROR;
                      case STDOUT:
                         System.out.print( (String)args );
@@ -177,30 +188,46 @@ public class Kernel
                         System.err.print( (String)args );
                         return OK;
                   }
-                  if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
+                  if ( ( myTcb = scheduler.getMyTcb( ) ) != null )
+                  {
                      FileTableEntry ftEnt = myTcb.getFtEnt( param );
                      if ( ftEnt != null )
+                     {
                         return fs.write( ftEnt, ( byte[] )args );
+                     }
                   }
                   return ERROR;
+                  
                case CREAD:   // to be implemented in assignment 4
                   return cache.read( param, ( byte[] )args ) ? OK : ERROR;
+                  
                case CWRITE:  // to be implemented in assignment 4
                   return cache.write( param, ( byte[] )args ) ? OK : ERROR;
+                  
                case CSYNC:   // to be implemented in assignment 4
                   cache.sync( );
                   return OK;
+                  
                case CFLUSH:  // to be implemented in assignment 4
                   cache.flush( );
                   return OK;
-               case OPEN:    // to be implemented in project
-                  if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
+                  
+               // Implemented for final project
+               case OPEN:
+                  if ( ( myTcb = scheduler.getMyTcb( ) ) != null )
+                  {
                      String[] s = ( String[] )args;
                      return myTcb.getFd( fs.open( s[0], s[1] ) );
-                  } else
+                  }
+                  else
+                  {
                      return ERROR;
-               case CLOSE:   // to be implemented in project
-                  if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
+                  }
+                  
+               // Implemented for final project
+               case CLOSE:
+                  if ( ( myTcb = scheduler.getMyTcb( ) ) != null )
+                  {
                      FileTableEntry ftEnt = myTcb.getFtEnt( param );
                      if ( ftEnt == null || fs.close( ftEnt ) == false )
                         return ERROR;
@@ -209,14 +236,18 @@ public class Kernel
                      return OK;
                   }
                   return ERROR;
-               case SIZE:    // to be implemented in project
+                  
+               // Implemented for final project
+               case SIZE:
                   if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
                      FileTableEntry ftEnt = myTcb.getFtEnt( param );
                      if ( ftEnt != null )
                         return fs.fsize( ftEnt );
                   }
                   return ERROR;
-               case SEEK:    // to be implemented in project
+                  
+               // Implemented for final project
+               case SEEK:
                   if ( ( myTcb = scheduler.getMyTcb( ) ) != null ) {
                      int[] seekArgs = ( int[] )args;
                      FileTableEntry ftEnt = myTcb.getFtEnt( param );
@@ -224,12 +255,17 @@ public class Kernel
                         return fs.seek( ftEnt, seekArgs[0], seekArgs[1] );
                   } 
                   return ERROR;
-               case FORMAT:  // to be implemented in project
+                  
+               // Implemented for final project
+               case FORMAT:
                   return ( fs.format( param ) == true ) ? OK : ERROR;
-               case DELETE:  // to be implemented in project
+               
+               // Implemented for final project
+               case DELETE:
                   return ( fs.delete( (String)args ) == true ) ? OK : ERROR;
             }
             return ERROR;
+            
          case INTERRUPT_DISK: // Disk interrupts
             // wake up the thread waiting for a service completion
             ioQueue.dequeueAndWakeup( COND_DISK_FIN );
