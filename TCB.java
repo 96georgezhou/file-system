@@ -1,12 +1,5 @@
-/**
- TCB Class
-
- @file TCB.java
- @section 430 Final Project
- @date June 12, 2014
-*/
- public class TCB {
-    private Thread thread = null;
+public class TCB {
+	private Thread thread = null;
     private int tid = 0;
     private int pid = 0;
     private boolean terminated = false;
@@ -20,8 +13,12 @@
         terminated = false;
 
         ftEnt = new FileTableEntry[32];    // added for the file system
-
-	   System.err.println( "threadOS: a new thread (thread=" + thread + 
+        for(int i = 0; i < 32; i++)
+    	{
+    		ftEnt[i] = null;
+    	}
+        
+        System.err.println( "threadOS: a new thread (thread=" + thread + 
 			    " tid=" + tid + 
 			    " pid=" + pid + ")");
     }
@@ -71,7 +68,7 @@
 	    return null;
     }
 
-    // added for the file systme
+    // added for the file system
     public synchronized FileTableEntry getFtEnt( int fd ) {
 	if ( fd >= 3 && fd < 32 )
 	    return ftEnt[fd];
