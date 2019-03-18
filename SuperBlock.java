@@ -17,6 +17,8 @@ public class SuperBlock{
 	private final int totalInodeLocation = 4;
 	private final int freeListLocation = 8;
 	private final int defaultBlocks = 1000;
+	
+	public int inodeBlocks;
 
 
     
@@ -34,6 +36,7 @@ public class SuperBlock{
 		totalInodes = SysLib.bytes2int(superBlock,totalInodeLocation);
 		freeList = SysLib.bytes2int(superBlock,freeListLocation);
 
+		inodeBlocks = totalInodes;
 		
 		if(totalBlocks == numBlocks && totalInodes > 0 && freeList >= 2){
 			return;
@@ -141,6 +144,7 @@ public class SuperBlock{
 			argInodeBlocks = defaultInodeBlocks;
 		}
 		totalInodes = argInodeBlocks;
+		inodeBlocks = totalInodes;
 
 
 		// Write fresh inodes to disk
