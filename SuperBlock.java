@@ -1,10 +1,11 @@
 /**
- * The first disk block, block 0, is called the superblock. It is used to describe
- * 		The number of disk blocks.
- * 		The number of inodes.
- * 		The block number of the head block of the free list.
- * It is the OS-managed block. No other information must be recorded in and no user threads
- * must be able to get access to the superblock.
+ * 
+ * SuperBlock.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
  */
 public class SuperBlock{
 

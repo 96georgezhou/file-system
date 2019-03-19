@@ -1,5 +1,14 @@
 import java.util.*;
 
+/**
+ * 
+ * Scheduler.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 public class Scheduler extends Thread
 {
    private Vector queue;

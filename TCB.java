@@ -1,3 +1,12 @@
+/**
+ * 
+ * TCB.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 public class TCB {
 	private Thread thread = null;
     private int tid = 0;

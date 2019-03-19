@@ -1,7 +1,12 @@
-//
-// Created by george on 03/16/19.
-//
-
+/**
+ * 
+ * FileTableEntry.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 public class FileTableEntry {
    public int seekPtr;                 // seek pointer
    public final Inode inode;           // reference to its inode

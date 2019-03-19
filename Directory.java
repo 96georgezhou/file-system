@@ -1,11 +1,17 @@
-//
-// Created by george on 03/16/19.
-//
 
 import java.util.*;
 import java.io.*;
 import java.lang.*;
 
+/**
+ * 
+ * Directory.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 public class Directory {
     private final static int maxChars = 30;                 // Max fnames chars
     private final static int maxJava = 60;                  // Max Java bytes

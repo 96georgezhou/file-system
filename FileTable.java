@@ -1,7 +1,12 @@
-//
-// Created by george on 03/16/19.
-//
-
+/**
+ * 
+ * FileTable.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 import java.util.Vector;
 
 public class FileTable {

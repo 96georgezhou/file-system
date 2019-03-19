@@ -2,6 +2,15 @@ import java.util.*;
 import java.lang.reflect.*;
 import java.io.*;
 
+/**
+ * 
+ * Kernel.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 public class Kernel
 {
    // Interrupt requests

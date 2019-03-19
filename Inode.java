@@ -1,3 +1,12 @@
+/**
+ * 
+ * Inode.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 public class Inode {
    private final static int iNodeSize = 32;       // inode byte size in disk
    public final static int directSize = 11;      // # direct pointers

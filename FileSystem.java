@@ -1,7 +1,12 @@
-//
-// Created by george on 03/16/19.
-//
-
+/**
+ * 
+ * FileSystem.java
+ * 
+ * George Zhou and Gahl Goziker
+ * CSS 430
+ * March 2019
+ *
+ */
 public class FileSystem {
     private SuperBlock superblock;
     private Directory directory;
