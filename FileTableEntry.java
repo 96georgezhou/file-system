@@ -1,26 +1,21 @@
-/**
- FileTableEntry Class
+//
+// Created by george on 03/16/19.
+//
 
- @file FileTableEntry.java
- @author Diane Kerstein
- @author Magda Grzmiel
- @section 430 Final Project
- @date June 12, 2014
-*/
-public class FileTableEntry {          // Each table entry should have
-   public int seekPtr;                 //    a file seek pointer
-   public final Inode inode;           //    a reference to its inode
-   public final short iNumber;         //    this inode number
-   public int count;                   //    # threads sharing this entry
-   public final String mode;           //    "r", "w", "w+", or "a"
+public class FileTableEntry {
+   public int seekPtr;                 // seek pointer
+   public final Inode inode;           // reference to its inode
+   public final short iNumber;         // inode number
+   public int count;
+   public final String mode;           // "r", "w", "w+", or "a"
    
    public FileTableEntry ( Inode i, short inumber, String m ) {
-      seekPtr = 0;             // the seek pointer is set to the file top
+      seekPtr = 0;             // top of the file
       inode = i;
       iNumber = inumber;
-      count = 1;               // at least on thread is using this entry
-      mode = m;                // once access mode is set, it never changes
-      if ( mode.compareTo( "a" ) == 0 ) // if mode is append,
+      count = 1;               // using this entry
+      mode = m;                // never change
+      if ( mode.compareTo( "a" ) == 0 ) // append
          seekPtr = inode.length;        // seekPtr points to the end of file
    }
 }
